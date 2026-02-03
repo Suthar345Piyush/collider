@@ -36,11 +36,14 @@ export function ControlPanel({
 
 
       return (
-          <div style={styles.panel}>
+          <div className="w-65 min-w-65 bg-slate-950 border-r border-slate-800 overflow-y-auto flex flex-col font-['Segoe_UI' , system-ui , sans-serif] text-slate-300 text-[13px]">
 
-               <div  style={styles.header}>
-                 <div style={styles.headerTitle}>Simulator Controls</div>
-                 <div style={styles.particleCount}>{particleCount} particles</div>
+
+               <div  className="px-4 pt-4.5 pb-3 border-b border-slate-800 flex justify-between items-center">
+
+                 <div className="text-[15px] font-bold text-slate-50 tracking-wide">Simulator Controls</div>
+
+                 <div className="text-[11px] text-slate-600 bg-slate-800 px-2 py-0.5 rounded-[10px]">{particleCount} particles</div>
                </div>
 
 
@@ -70,7 +73,7 @@ export function ControlPanel({
 
                <Section title="Collision Type">
 
-                 <div style={styles.toggleRow}>
+                 <div className="flex gap-2">
                     
                      <ToggleBtn active={config.collisionType === 'elastic'} onClick={() => update      ("collisionType" , "elastic")}>
                        Elastic
@@ -90,7 +93,7 @@ export function ControlPanel({
                  )}
 
 
-                 <div>
+                 <div className="bg-slate-800 rounded-md px-2.5 py-1.5 text-[11px] text-slate-500 leading-[1.4]">
 
                    {config.collisionType === "elastic" ? "KE & momentum fully conserved. e = 1.0" : `Energy lost on collision. e = ${config.restitution} (0 = stick together)`}
 
@@ -139,7 +142,7 @@ export function ControlPanel({
 
               <Section title="Simulation">
 
-                 <div style={styles.btnRow}>
+                 <div className="flex gap-2">
                    {status === 'running' ? (
 
                       <ActionBtn color="#f59e0b" onClick={() => onSetStatus('paused')}>
@@ -160,9 +163,9 @@ export function ControlPanel({
                  </div>
 
 
-                 <div style={styles.speedLabel}>Time Scale</div>
+                 <div className="text-[11px] text-slate-600 mt-1">Time Scale</div>
 
-                 <div style={styles.speedRow}>
+                 <div className="flex gap-1.5">
 
                    {[0.25 , 0.5 , 1 , 2].map((ts) => (
 
@@ -181,7 +184,7 @@ export function ControlPanel({
 
               {/* click on canvas to create particle   */}
 
-              <div style={styles.hint}>
+              <div className="px-4 py-3 text-[11px] text-slate-600 text-center bg-[#0a0f1a] mt-auto">
                  * Click anywhere on the canvas to spawn a particle 
               </div>
 
@@ -199,8 +202,8 @@ function Section({title , children} : {title : string , children : React.ReactNo
     
      return (
 
-        <div style={styles.section}>
-           <div style={styles.sectionTitle}>{title}</div>
+        <div className="px-4 py-3.5 border-b border-slate-800 flex flex-col gap-2.5">
+           <div className="text-[10px] uppercase tracking-[1.2px] text-slate-600 font-semibold mb-0.5">{title}</div>
            {children}
         </div>
 
@@ -230,17 +233,17 @@ function Slider({
    
 
       return (
-          <div style={styles.sliderGroup}>
+          <div className="flex flex-col gap-1">
 
-             <div style={styles.sliderHeader}>
+             <div className="flex justify-between text-xs text-slate-400">
 
                <span>{label}</span>
 
-               <span style={styles.sliderValue}>{value}{unit}</span>
+               <span className="text-blue-400 font-semibold font-['Courier_New' , monospace]">{value}{unit}</span>
 
              </div>
 
-             <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(parseFloat(e.target.value))} style={styles.slider}/>
+             <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(parseFloat(e.target.value))} className="w-full accent-blue-500 h-1 cursor-pointer"/>
 
 
           </div>
@@ -266,13 +269,18 @@ function Toggle({
 
     return (
 
-        <div style={styles.toggleGroup}>
+        <div className="flex justify-between items-center">
 
-           <span style={styles.toggleLabel}>{label}</span>
+           <span className="text-xs text-slate-400">{label}</span>
 
-           <div style={{...styles.toggleTrack , background : value ? "#3b82f6" : "#374151"}} onClick={() => onChange(!value)}>
+           <div className={`w-9.5 h-5.5 rounded-[11px] cursor-pointer relative transition-colors duration-200 ${
+             value ? "bg-blue-500" : "bg-gray-700"
+           }`} onClick={() => onChange(!value)}>
              
-             <div style={{...styles.toggleThumb , transform : value ? 'translateX(18px)' : 'translateX(2px)'}} />
+             
+             <div className={`w-4.5 h-4.5 rounded-[9px] bg-white absolute top-0.5 transition-transform duration-200 ${ 
+                value ? "translate-x-4.5" : "translate-x-0.5"
+             }`} />
 
            </div>
 
@@ -302,7 +310,13 @@ function ToggleBtn({
 
        <button 
        onClick={onClick} 
-       style={{...styles.toggleBtn , background : active ? "#3b82f6" : "#1e293b" , color : active ? "#fff" : "#94a3b8" , boxShadow : active ? "0 0 12px rgba(59 , 130 , 246 , 0.4)" : "none"}}>
+
+        className={`flex-1 py-1.5 border-none rounded-md cursor-pointer text-xs font-semibold trasition-all duration-200 ${
+           active ? "bg-blue-500 text-white shadow-[0_0_12px_rgba(59 , 130 , 246 , 0.4)]" : "bg-slate-800 text-slate-400"
+
+        }`}
+       
+       >
 
         {children}
 
@@ -330,7 +344,7 @@ function ActionBtn({
    
      return (
 
-          <button onClick={onClick} style={{...styles.actionBtn , background : color}}>
+          <button onClick={onClick} className={`flex-1 border-none rounded-md py-2 text-white font-semibold text-xs cursor-pointer transition-opacity duration-150 ${color}`}>
 
             {children}
 
@@ -358,7 +372,13 @@ function SpeedBtn({
    {
        return (
 
-         <button onClick={onClick} style={{...styles.speedBtn , background : active ? "#3b82f6" : "#1e293b" , color : active ? "#fff" : "#64748b"}}>
+         <button 
+         onClick={onClick} 
+
+         className={`flex-1 border-none rounded-[5px] py-1.25 text-[11px] font-semibold cursor-pointer transition-all duration-150 ${
+            active ? "bg-blue-500 text-white" : "bg-slate-800 text-slate-500"
+          }`}>
+
            {children}
          </button>
 
@@ -385,8 +405,8 @@ function SpeedBtn({
 
       return (
 
-          <div style={styles.angleWrap}>
-             <svg width={size} height={size} style={styles.angleSvg}>
+          <div className="flex items-center gap-2 justify-center mt-0.5">
+             <svg width={size} height={size} className="block">
                
                 <circle cx={cx} cy={cy} r={r} fill="none" stroke="#334155" strokeWidth="2" />
 
@@ -398,7 +418,7 @@ function SpeedBtn({
                    
              </svg>
 
-             <span style={styles.anglelabel}>{angle}°</span>
+             <span className="text-[11px] text-blue-400 font-['Courier_New' , monospace]">{angle}°</span>
           </div>
 
       );
