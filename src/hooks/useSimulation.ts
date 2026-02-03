@@ -1,11 +1,11 @@
 // custom useSimulation hook to perform the simulation 
 
 import { useState , useRef , useCallback , useEffect } from "react";
-import type { Particle , SimulationConfig , SimulationState , SimulationStatus , CollisionSnapshot , Vec2 , SpawnPreview } from "../types";
+import type {  SimulationConfig , SimulationState , SimulationStatus , CollisionSnapshot , Vec2 , SpawnPreview } from "../types";
 
 import { createParticle , updateParticle } from "../physics/particle";
 import { resolveCollisions } from "../physics/collision";
-import { vec } from "../physics/vector";
+
 
 
 
