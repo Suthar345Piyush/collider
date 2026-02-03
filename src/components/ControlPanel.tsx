@@ -1,6 +1,7 @@
 // control panel with all control metrices 
 
 
+
 import type { SimulationStatus , SimulationConfig } from "../types";
 
 
@@ -37,7 +38,7 @@ export function ControlPanel({
       return (
           <div style={styles.panel}>
 
-               <div style={styles.header}>
+               <div  style={styles.header}>
                  <div style={styles.headerTitle}>Simulator Controls</div>
                  <div style={styles.particleCount}>{particleCount} particles</div>
                </div>
@@ -133,20 +134,290 @@ export function ControlPanel({
               </Section>
 
 
-
- 
-
+              {/* simulation controls section  */}
 
 
+              <Section title="Simulation">
+
+                 <div style={styles.btnRow}>
+                   {status === 'running' ? (
+
+                      <ActionBtn color="#f59e0b" onClick={() => onSetStatus('paused')}>
+                           ⏸ Pause
+                      </ActionBtn>
+
+                   ) : (
+                      <ActionBtn color="#10b981" onClick={() => onSetStatus("running")}>
+                         ▶  Play
+                      </ActionBtn>
+                     
+                   )}
+
+                   <ActionBtn color="#ef4444" onClick={onReset}>
+                   ↺ Reset
+                   </ActionBtn>
+                   
+                 </div>
+
+
+                 <div style={styles.speedLabel}>Time Scale</div>
+
+                 <div style={styles.speedRow}>
+
+                   {[0.25 , 0.5 , 1 , 2].map((ts) => (
+
+                      <SpeedBtn key={ts} active={timeScale === ts} onClick={() => onSetTimeScale(ts)}>
+
+                         {ts}x
+
+                      </SpeedBtn>
+
+                   ))}
+
+                 </div>
+
+              </Section>
+
+
+              {/* click on canvas to create particle   */}
+
+              <div style={styles.hint}>
+                 * Click anywhere on the canvas to spawn a particle 
+              </div>
+
+          </div>
+      );
+}
 
 
 
+
+//  some functions like (section , toggle , actionBtn , slider , etc...)
+
+
+function Section({title , children} : {title : string , children : React.ReactNode}) {
     
+     return (
+
+        <div style={styles.section}>
+           <div style={styles.sectionTitle}>{title}</div>
+           {children}
+        </div>
+
+     );
+}
 
 
+
+function Slider({
+    label,
+    value,
+    min,
+    max,
+    step,
+    unit,
+    onChange,
+} : {
+   label : string;
+   value : number;
+   min : number;
+   max : number;
+   step : number;
+   unit : string;
+
+   onChange : (v : number) => void;
+})  {
+   
+
+      return (
+          <div style={styles.sliderGroup}>
+
+             <div style={styles.sliderHeader}>
+
+               <span>{label}</span>
+
+               <span style={styles.sliderValue}>{value}{unit}</span>
+
+             </div>
+
+             <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(parseFloat(e.target.value))} style={styles.slider}/>
 
 
           </div>
-      )
+      );
 }
+
+
+
+
+function Toggle({
+
+   label,
+   value,
+   onChange,
+
+} : {
+
+    label : string;
+    value : boolean;
+    onChange : (v : boolean) => void;
+
+}) {
+
+    return (
+
+        <div style={styles.toggleGroup}>
+
+           <span style={styles.toggleLabel}>{label}</span>
+
+           <div style={{...styles.toggleTrack , background : value ? "#3b82f6" : "#374151"}} onClick={() => onChange(!value)}>
+             
+             <div style={{...styles.toggleThumb , transform : value ? 'translateX(18px)' : 'translateX(2px)'}} />
+
+           </div>
+
+        </div>
+
+    );
+
+}
+
+
+
+function ToggleBtn({
+
+   active,
+   onClick,
+   children,
+
+} : {
+
+   active : boolean;
+   onClick : () => void;
+   children : React.ReactNode;
+
+})  {
+
+    return (
+
+       <button 
+       onClick={onClick} 
+       style={{...styles.toggleBtn , background : active ? "#3b82f6" : "#1e293b" , color : active ? "#fff" : "#94a3b8" , boxShadow : active ? "0 0 12px rgba(59 , 130 , 246 , 0.4)" : "none"}}>
+
+        {children}
+
+       </button>
+
+    );
+
+}
+
+
+
+function ActionBtn({
+
+   color,
+   onClick,
+   children,
+
+} : {
+
+   color : string;
+   onClick : () => void;
+   children : React.ReactNode;
+
+}) {
+   
+     return (
+
+          <button onClick={onClick} style={{...styles.actionBtn , background : color}}>
+
+            {children}
+
+          </button>
+
+     );
+}
+
+
+
+function SpeedBtn({
+
+   active,
+   onClick,
+   children,
+
+} : {
+
+   active : boolean;
+   onClick : () => void;
+   children : React.ReactNode;
+
+}) 
+
+   {
+       return (
+
+         <button onClick={onClick} style={{...styles.speedBtn , background : active ? "#3b82f6" : "#1e293b" , color : active ? "#fff" : "#64748b"}}>
+           {children}
+         </button>
+
+       )
+   }
+
+
+
+
+   // angle indicator function 
+
+
+   function AngleIndicator({angle} : {angle : number})  {
+
+      const rad = (angle * Math.PI) / 180;
+      const size = 44;
+      const cx = size / 2;
+      const cy = size / 2;
+      const r = 16;
+
+      const tipX = cx + r * Math.cos(rad);       // x-direction - cos
+      const tipY = cy + r * Math.sin(rad);      // y-direction - sin 
+
+
+      return (
+
+          <div style={styles.angleWrap}>
+             <svg width={size} height={size} style={styles.angleSvg}>
+               
+                <circle cx={cx} cy={cy} r={r} fill="none" stroke="#334155" strokeWidth="2" />
+
+                <circle cx={cx} cy={cy} r={r} fill="none" />
+
+                <line x1={cx} y1={cy} x2={tipX} y2={tipY} stroke="#3b82f6" strokeWidth="2.5" strokeLinecap="round"/>
+
+                <circle cx={tipX} cy={tipY} r={3} fill="#3b82f6"/>
+                   
+             </svg>
+
+             <span style={styles.anglelabel}>{angle}°</span>
+          </div>
+
+      );
+
+
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
