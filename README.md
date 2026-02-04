@@ -1,73 +1,71 @@
-# React + TypeScript + Vite
+# Collider
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Collider , a physics based function project where you can collide more than one particle on canvas , and can measure all the metrices related to it , like it's momentum , kinetic energy , speed of particle , gravity , energy conservation , energy loss with their dedicated graph , charts based representation. A very minimalistic fun project which follow physics law's. Built for physics lovers and learners.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: React
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS
+- **Drawing** : Canvas API
+- **Charts** : Recharts
 
-## Expanding the ESLint configuration
+## Project Structure 
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+collider/
+├── public/
+├── src/
+│   ├── components/           # ui components
+│   │   ├── Canvas.tsx
+│   │   ├── CollisionPanel.tsx
+│   │   └── ControlPanel.tsx
+│   │
+│   ├── hooks/                  # custom hook for simulation
+│   │   └── useSimulation.ts
+│   │
+│   ├── physics/                 # core physics logic
+│   │   ├── collision.ts
+│   │   ├── particle.ts
+│   │   └── vector.ts
+│   │
+│   ├── types/                  # types for whole app
+│   │   └── index.ts
+│   │
+│   ├── utils/                 # graph related data
+│   │   └── GraphData.ts
+│   │
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Contributing
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Contributions are welcome! Please follow these guidelines:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Write tests if applicable
+5. Submit a pull request
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## License
+
+MIT License - see LICENSE file for details
+---
+
+
+**Made with ❤️ by Piyush Suthar**
+
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Suthar345Piyush)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/piyush-suthar-641a0826a/)
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/eigenpiyush)
+
+</div>
+
+
+
+
