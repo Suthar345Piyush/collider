@@ -6,7 +6,7 @@ Collider , a physics based function project where you can collide more than one 
 
 ## Tech Stack
 
-- **Framework**: React
+- **Framework**: React 19.2
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS
 - **Drawing** : Canvas API
