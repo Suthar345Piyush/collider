@@ -14,6 +14,8 @@ Collider , a physics based function project where you can collide more than one 
 
 ## Project Structure 
 
+```
+
 collider/
 ├── public/
 ├── src/
@@ -39,6 +41,8 @@ collider/
 │   ├── App.tsx
 │   ├── index.css
 │   └── main.tsx
+
+```
 
 
 
